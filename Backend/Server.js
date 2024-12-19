@@ -16,6 +16,10 @@ app.use('/complaint',ComplaintRouter)
 
 app.use('/uploads',express.static(path.join(__dirname,'uploads')));
 
+//routers
+const adminRoutes = require('./routers/Admin_Router')
+app.use('/admin',adminRoutes)
+
 app.listen(Port, () => {
     console.log(`Server is running on port ${Port}`);
 });
