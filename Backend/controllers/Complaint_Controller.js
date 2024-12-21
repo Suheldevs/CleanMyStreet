@@ -33,4 +33,20 @@ const saveComplaint = async (req, res) => {
     }
 };
 
-module.exports = { saveComplaint };
+const getAllComplaints = async (req, res) => {
+    try {
+        const complaints = await complaintModel.find();
+        res.status(200).json({
+            message: 'Complaints fetched successfully',
+            complaints,
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: 'Internal server error',
+            Error: err.message,
+        });
+    }
+};
+
+
+module.exports = { saveComplaint,getAllComplaints };

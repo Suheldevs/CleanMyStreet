@@ -7,6 +7,10 @@ const signin = async(req,res)=>{
         if(!username || !password || !email){
             return res.status(404).json({message:'All fiend is required'})
         }
+        const matchUser = await adminModel.findOne({username})
+        if(matchUser){
+            return res.status(404).json({message:'User already exist'})
+        }
         const newUser = new adminModel({username,email,password})
         await newUser.save()
         res.status(200).json({message:'Sign in successfully',userData:newUser})
@@ -22,9 +26,9 @@ const login = async(req,res)=>{
         if(!username || !password){
             return res.status(404).json({message:'All fiend is required'})
         }
-        const user = await adminModel.findOne({username})
+        const user = await adminModel.findOne({username:username})
         if(!user){
-           return res.status(400).json({message:'user not found'})
+           return res.status(400).json({message:'User Not Found'})
         }
         if(user.password == password){
           return  res.status(200).json({message:'Log in successfully',userData:user})

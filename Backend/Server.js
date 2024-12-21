@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
+const cors = require('cors')
 dotenv.config();
 const path = require('path')
 const mongodb_Url = process.env.MONGODB_URL; 
 const Port = process.env.PORT || 3000; 
 app.use(express.json())
+app.use(cors());
 mongoose.connect(mongodb_Url)
 .then(() => console.log("Database connected!"))
 .catch((err) => console.log("Error connecting to the database:", err));
