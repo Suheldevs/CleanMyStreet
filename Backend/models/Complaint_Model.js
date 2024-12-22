@@ -27,7 +27,7 @@ const complaintSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'Approved By Admin', 'Rejected By Admin'],
+        enum: ['Pending', 'Approved By Admin', 'Rejected By Admin','Pending At Nagar Nigam','Resolved'],
         default: 'Pending',
     },
     level1Status: {
@@ -39,23 +39,6 @@ const complaintSchema = new mongoose.Schema({
         type: String,
         enum: ['Pending', 'Resolved', 'Rejected'],
         default: 'Pending',
-    },
-    level3Status: {
-        type: String,
-        enum: ['Pending', 'Resolved','Rejected'],
-        default: 'Pending',
-    },
-    level1Email: {
-        type: String,
-        default: 'garbage@nagarpalika.in',
-    },
-    level2Email: {
-        type: String,
-        default: 'regional.dm@state.gov.in',
-    },
-    level3Email: {
-        type: String,
-        default: 'chiefminister@state.gov.in',
     },
     createdAt: {
         type: Date,

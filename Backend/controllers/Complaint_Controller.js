@@ -48,5 +48,33 @@ const getAllComplaints = async (req, res) => {
     }
 };
 
+const updateComplaints = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!id) {
+            return res.status(400).json({ message: 'You are not allowed to update' });
+        }
 
-module.exports = { saveComplaint,getAllComplaints };
+        const body = req.body;
+        if (!body.title || !body.description) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+        const updatedData = await complaintModel.findByIdAndUpdate(
+            id,
+            body,
+            { new: true }
+        );
+
+        if (!updatedData) {
+            return res.status(404).json({ message: 'Complaint not found' });
+        }
+
+        res.status(200).json({ message: 'Update successful', updatedData });
+    } catch (err) {
+        res.status(500).json({ message: 'Internal Server Error', error: err.message });
+    }
+};
+
+
+
+module.exports = { saveComplaint, getAllComplaints, updateComplaints };
