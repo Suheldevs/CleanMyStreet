@@ -1,12 +1,16 @@
-import React from 'react'
-import CaptureComplaint from '../Component/Test'
+import React from "react";
+import HowItWork from "../Component/HowItWork";
+import Footer from "../Component/Footer";
+import Hero from "../Component/Hero";
 
 function Home() {
   return (
-    <div className='mt-4'>
-      <CaptureComplaint/>
-    </div>
-  )
+    <>
+      <Hero />
+      <HowItWork />
+      <Footer />
+    </>
+  );
 }
 
-export default Home
+export default Home;
