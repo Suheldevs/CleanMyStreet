@@ -15,9 +15,9 @@ const Hero = () => {
   const [complaintId, setComplaintId] = useState("sdfghjk");
   const [complaintData, setComplaintData] = useState({
     imageUrl: photo,
-    title: "",
-    description: "",
-    location: { type: "", coordinates: [] },
+    title: "Title",
+    description: "Description",
+    location: { type: "point", coordinates: [] },
   });
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -48,7 +48,7 @@ const Hero = () => {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     const dataUrl = canvas.toDataURL("image/png");
-    setPhoto(dataUrl);
+    setPhoto(dataUrl)
     canvas.toBlob(
       (blob) => {
         if (blob) {
@@ -106,10 +106,12 @@ const Hero = () => {
   const handleSubmit = () => {
     if (image && location) {
       setComplaintData({ ...complaintData, imageUrl: image });
-      console.log("Complaint Data:", complaintData);
       try {
         setLoading(true);
-        const res = axios.post(`${backendUrl}/complaint/save`, complaintData);
+        console.log("Complaint Data:", complaintData);
+        const res = axios.post(`${backendUrl}/complaint/save`, complaintData, {headers:{
+          'Content-Type':'multipart/form-data'
+        }});
         console.log(res);
 
         if (res.status == 200) {
@@ -117,7 +119,8 @@ const Hero = () => {
           setComplaintId(res.data.complaintData.uniqueId);
         }
         if (res.status != 200) {
-          setError(res.data.message);
+          console.log(res)
+          // setError(res.data.message);
         }
       } catch (err) {
         setError("Something went wrong..");

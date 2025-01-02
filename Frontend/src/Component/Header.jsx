@@ -16,9 +16,8 @@ import { ThemeContext } from "../Context/ThemeProvider";
 
 function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useContext(ThemeContext); // Assuming your context provides theme and toggle function
+  const { theme, toggleTheme } = useContext(ThemeContext); 
 
-  // Handle theme toggle
   const handleThemeToggle = () => {
     toggleTheme();
   };

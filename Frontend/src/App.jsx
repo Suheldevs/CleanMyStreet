@@ -7,7 +7,6 @@ import Disclaimer from './Component/Disclaimer.jsx';
 
 function App() {
   const context = useContext(ThemeContext);
-  console.log(context)
   return (
   <div className={`${context.theme === 'light' ? 'bg-slate-900 ': 'bg-white'}`}>
 
