@@ -16,7 +16,7 @@ const saveComplaint = async (req, res) => {
         }
         const newComplaint = new complaintModel({
             ...body,
-            imageUrl: image.filename
+            imageUrl: image.path
         });
         const complaintData = await newComplaint.save();
 

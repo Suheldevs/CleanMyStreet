@@ -103,34 +103,36 @@ const Hero = () => {
     setComplaintData({ ...complaintData, [name]: value });
   };
 
-  const handleSubmit = () => {
-    if (image && location) {
-      setComplaintData({ ...complaintData, imageUrl: image });
-      try {
-        setLoading(true);
-        console.log("Complaint Data:", complaintData);
-        const res = axios.post(`${backendUrl}/complaint/save`, complaintData, {headers:{
-          'Content-Type':'multipart/form-data'
-        }});
-        console.log(res);
-
-        if (res.status == 200) {
-          setSubmited(true);
-          setComplaintId(res.data.complaintData.uniqueId);
+  const handleSubmit = async() => {
+      if (image && location) {
+        const formData = new FormData();
+        formData.append("image", image);
+        formData.append("title", complaintData.title);
+        formData.append("description", complaintData.description);
+        formData.append(
+          "location",
+          JSON.stringify({ type: "Point", coordinates: [location.lat, location.lon] })
+        );
+    
+        try {
+          setLoading(true);
+          const res = await axios.post(`${backendUrl}/complaint/save`, formData,{headers:{'Content-Type':'multipart/form-data'}});
+          console.log("Response from server", res);
+          if (res.status === 200) {
+            setSubmited(true);
+            setComplaintId(res.data.complaintData.uniqueId);
+          } else {
+            setError(res.data.message);
+          }
+        } catch (err) {
+          setError("Something went wrong..");
+          console.log("Submit error", err);
+        } finally {
+          setLoading(false);
         }
-        if (res.status != 200) {
-          console.log(res)
-          // setError(res.data.message);
-        }
-      } catch (err) {
-        setError("Something went wrong..");
-        console.log("Submit error", err);
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      setError("Photo & Location is required");
-    }
+      } else {
+        setError("Photo & Location is required");
+      }  
   };
 
   return (
